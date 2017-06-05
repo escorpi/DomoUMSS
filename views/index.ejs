@@ -1,0 +1,108 @@
+<!DOCTYPE HTML>
+ <html>
+   <head> 
+    <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+	<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+  </head>
+<body>
+  	<h1> <span class="InTouchH1"><em>Domotica</em></span>      <span class="InTouchH2">Seguridad & Control</span> </h1>
+   <div id="rData">
+
+			<div class="IO_boxc">
+				<h4>Data from Arduino</h4>
+				<fieldset class="SignalField"> 
+					<legend class="FieldLabelText" style="margin-left:12px; padding-left:1px;">Temperatura & Humedad</legend>
+										
+					<canvas id="myCanvas" width="60" height="400"></canvas>  					
+   				</fieldset>   
+				    <fieldset class="SignalField"> 
+					<legend class="FieldLabelText" style="margin-left:12px; padding-left:1px;">envio datos</legend>
+				</fieldset> 
+				<fieldset class="StatusField"> 
+					<legend class="FieldLabelText">Estado</legend>                                           
+							<p>Alarma Gas: <span class="switches">...</span></p>
+						
+							<p>LLuvia: <span class="switches">...</span></p>
+				</fieldset>		
+				
+			</div> <!-- Sensors -->	
+	
+  
+   </div><!-- rData -->
+
+  
+    <div id="sData">
+    <div class="IO_boxc">
+	<h2>Data to Arduino</h2>
+	<fieldset class="SwitchesField"> 	
+	<legend class="FieldLabelText">Interruptores</legend>
+	 <div id="btnHolder">
+	<!-- <label class="switch"> 
+	  <input type="checkbox" id="check" value="toggle"/></label><label for="check">Toggle</label>-->
+	   					<label class="switch">                            
+						  <div class="onoffswitch">
+  						  <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" onclick="onoff('onoffswitch');" data-icon1="OFF" data-icon2="ON"  unchecked>
+   						  </div>
+						</label> <span class="skrif">Led verde</span>			
+						  <label class="switch">                        
+						  <div class="onoffswitch">
+  						  <input type="checkbox" name="onoffswitch1" class="onoffswitch-checkbox" id="myonoffswitch" onclick="onoff('onoffswitch1');"  data-icon1="OFF" data-icon2="ON" unchecked>  						  
+   						  </div>
+						</label> <span class="skrif">Led alert</span>
+						<label class="switch">                            
+						  <div class="onoffswitch">
+  						  <input type="checkbox" name="onoffswitch2" class="onoffswitch-checkbox" id="myonoffswitch" onclick="onoff('onoffswitch2');"  data-icon1="OFF" data-icon2="ON" unchecked>
+    					  </div>
+						</label> <span class="skrif">Led azul</span>			
+						<label class="switch">                            
+						  <div class="onoffswitch">
+  						  <input type="checkbox" name="onoffswitch3" class="onoffswitch-checkbox" id="myonoffswitch" onclick="onoff('onoffswitch3');" data-icon1="OFF" data-icon2="ON" unchecked>
+    					  </div>
+    					  <span class="skrif">Led rojo</span>
+						</label> 	
+						<label class="switch"> 
+						<div class="onoffswitch">                           
+						 <input type="checkbox" name="onoffswitch4" class="onoffswitch-checkbox" id="myonoffswitch" onclick="onoff('onoffswitch4');"  data-icon1="OFF" data-icon2="ON" unchecked>
+						 </div>
+    					</label> <span class="skrif">Led TV</span>		
+	</div>
+	<p id="sliderTxt">LED Dimmer</p>
+	<div id="slider"></div>					
+	</fieldset>				
+					
+	
+	
+   </div><!-- boxc -->	
+   </div> <!-- sData -->	
+
+
+   <div id="camaraData">
+    <div class="IO_boxc">
+	<h3>Vigilancia</h3>
+    <div class="redbuttonbox">
+						
+		<button class="buttonred" type="button" id="LED?" onclick="">Camara<p style="font-size:330%; color:white;">&#x2776</b></p></button>
+		<button class="buttonred" type="button" id="LED?" onclick="">Camara<p style="font-size:330%; color:white;">&#x2777</b></button>
+		<button class="buttonred" type="button" id="LED?" onclick="">Camara<p style="font-size:330%; color:white;">&#x2778</b></button>
+		<button class="buttonred" type="button" id="LED?" onclick="abrir(640,480,'on.png','Mi foto 1')">Camara<p style="font-size:330%; color:white;">&#x2779</b></button>
+	</div>
+	<fieldset class="SignalField"> 
+	<legend class="FieldLabelText" style="margin-left:12px; padding-left:1px;">Emular Prescencia</legend>  <button class="buttonred" type="button" id="LED5" onclick="GetButton3()">Noche</button>
+	<button class="buttonred" type="button" id="LED5" onclick="GetButton3()">Dia</button>                     
+	
+	</fieldset> 
+	</div>
+   </div>
+_________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________  
+  <div class="wrapper">
+        
+  </div> 
+	
+    <div class="push">
+	<div class="footer">
+        <p>Copyright (c) 2015 Domotica seguridad & control</p>
+    </div>
+    </div>
+  
+  </body>

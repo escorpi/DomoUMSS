@@ -1,0 +1,227 @@
+extends layout
+
+block content
+  meta(charset='utf-8')
+  meta(http-equiv='X-UA-Compatible', content='IE=edge,chrome=1')
+  title Domotica
+  meta(name='description', content='')
+  meta(name='viewport', content='width=device-width')
+  link(rel='shortcut icon', type='image/x-icon', href='/images/favicon.png')
+  body.bg-fixed.bg-1
+    .main-container
+      .main.wrapper.clearfix
+        header#header
+          #logo
+            h2
+              | Sistema Domotico
+            h4
+              | Seguridad / Control
+        #tab-container.tab-container
+          ul.etabs
+            li#tab-about.tab
+              a(href='#about')
+                i.icon-user
+                span  Inicio
+            li.tab
+              a(href='#resume')
+                i.icon-file-text
+                span  Resumen
+            li.tab
+              a(href='#portfolio')
+                i.icon-heart
+                span  Estadisticas
+            li.tab
+              a(href='#contact')
+                i.icon-envelope
+                span  Seguridad
+          #tab-data-wrap
+            #about
+              section.clearfix
+                .g2
+                  .photo
+                    img(src='http://www.bidiatecnologia.com/wp-content/uploads/2015/09/smart-kit-ciudad-celeste.jpg', alt='Sunny Luthra')
+                  .info
+                    h2
+                      | Sistema Domotico
+                    h4
+                      | Seguridad / Control
+                    p
+                      | Con la realización del sistema de control domótico para los habitantes de la vivienda se le asegura un aumento del confort, de la seguridad, del ahorro energético y de las facilidades de comunicación, haciendo uso de las nuevas tecnologías de comunicación y teléfonos inteligentes.
+                .g1
+                  .main-links.sidebar
+                    ul
+                      li
+                        a(href='#resume') Ver Resumen
+                      li
+                        a(href='#portfolio') Estadisticas
+                      li
+                        a(href='#contact') Seguridad
+                      li
+                        a(href='#features') Features
+                .break
+                .contact-info
+                  .g1
+                    .item-box.clearfix
+                      i.icon-envelope
+                      .item-data
+                        h7
+                          a(href='mailto:shanon.4ever@gmail.com') shanon.4ever@gmail.com
+                        p Email Address
+                  .g1
+                    .item-box.clearfix
+                      i.icon-facebook
+                      .item-data
+                        h7
+                          a(href='http://fb.me/alfredo.solisq') alfredo solis
+                        p Facebook Profile
+                  .g1
+                    .item-box.clearfix
+                      i.icon-twitter
+                      .item-data
+                        h7
+                          a(href='http://twitter.com/') @asq
+                        p Twitter Handle
+            #resume
+              section.clearfix
+                .g2
+                  h3
+                    | Sensores
+                  ul.no-list.work
+                    li
+                      h5
+                        | Temperatura y Humedad
+                      span.label.label-info CN 22°c-70%
+                      p
+                      div
+                        h7
+                          | Temperatura
+                          #temp.temp(style='display: inline;')
+                           i#baja.flaticon-baja(style='display: none;')
+                           i#normal.flaticon-normal(style='display: none;')
+                           i#alta.flaticon-alta(style='display: none;')
+                        span#valor(style='position: absolute;')
+                        .break
+                        h7
+                          | Humedad 
+                        progress#barraH(value='0', max='100' style='display: none;')
+                        i.flaticon-humedad
+                        span#valorH(style='position: absolute;')
+                    li
+                      h5
+                        | Concentrasion de gas
+                      span.label.label-info CN menor a 30
+                      p
+                        #chartdiv
+                      #rData
+                        .IO_boxc
+                          fieldset.StatusField
+                            legend.FieldLabelText Estado
+                            p
+                              | Alarma Gas: 
+                              span.switches ...
+                            p
+                              | LLuvia: 
+                              span.switches ...
+                .g1
+                  .sidebar
+                    h3
+                      | Control
+                    h5
+                      | On/Off
+                    #sData
+                      .IO_boxc
+                        fieldset.SwitchesField
+                          #btnHolder
+                            label.switch
+                              .onoffswitch
+                                input#myonoffswitch.onoffswitch-checkbox(type='checkbox', name='onoffswitch', onclick="onoff('onoffswitch');", data-icon1='OFF', data-icon2='ON', unchecked='')
+                            span.skrif Led verde
+                            label.switch
+                              .onoffswitch
+                                input#myonoffswitch.onoffswitch-checkbox(type='checkbox', name='onoffswitch1', onclick="onoff('onoffswitch1');", data-icon1='OFF', data-icon2='ON', unchecked='')
+                            span.skrif Led alert
+                            label.switch
+                              .onoffswitch
+                                input#myonoffswitch.onoffswitch-checkbox(type='checkbox', name='onoffswitch2', onclick="onoff('onoffswitch2');", data-icon1='OFF', data-icon2='ON', unchecked='')
+                            span.skrif Led azul
+                            label.switch
+                              .onoffswitch
+                                input#myonoffswitch.onoffswitch-checkbox(type='checkbox', name='onoffswitch3', onclick="onoff('onoffswitch3');", data-icon1='OFF', data-icon2='ON', unchecked='')
+                              span.skrif Led rojo
+                            label.switch
+                              .onoffswitch
+                                input#myonoffswitch.onoffswitch-checkbox(type='checkbox', name='onoffswitch4', onclick="onoff('onoffswitch4');", data-icon1='OFF', data-icon2='ON', unchecked='')
+                            span.skrif Led TV
+            #portfolio
+              section.clearfix
+                
+                  #chart(style='width:100%; height:400px;')
+                  script.
+                    // Creo un WebSocket. ¡Poned la IP de vuestra Raspberry Pi!
+                    var socket=io.connect('http://localhost:4000');
+                    // Creo un nuevo objeto 'Chart'
+                    var chart;
+                    chart = new Highcharts.Chart({
+                    chart: {
+                    renderTo: 'chart',
+                    defaultSeriesType: 'spline',
+                    events: {
+                    load: function() {
+                    // Cada vez que reciba un valor desde el socket, lo meto en la gráfica
+                    socket.on('temperatureUpdate', function (time, data) {
+                    var series = chart.series[0];
+                    series.addPoint([time, data]);
+                    });
+                    }
+                    }
+                    },
+                    rangeSelector : {
+                    selected : 100
+                    },
+                    title: {
+                    text: ' Temperatura de la Vivienda'
+                    },
+                    xAxis: {
+                    type: 'datetime',
+                    tickPixelInterval: 150,
+                    maxZoom: 20 * 1000
+                    },
+                    yAxis: {
+                    minPadding: 0.2,
+                    maxPadding: 0.2,
+                    title: {
+                    text: 'Temperature ºC',
+                    margin: 80
+                    }
+                    },
+                    series: [{
+                    name: 'Temperature',
+                    data: []
+                    }]
+                    });
+            #contact
+              section.clearfix
+                .g1
+                  h3 Vigilancia
+                  fieldset.SignalField
+                    button.buttonred(type='button', id='LED?', onclick='')
+                      | Camara
+                      p(style='font-size:230%; color:white;') &#x2776
+                    button.buttonred(type='button', id='LED?', onclick='')
+                      | Camara
+                      p(style='font-size:230%; color:white;') &#x2777
+                    button.buttonred(type='button', id='LED?', onclick='')
+                      | Camara
+                      p(style='font-size:230%; color:white;') &#x2778
+                    button.buttonred(type='button', id='LED?', onclick="abrir(640,480,'on.png','Mi foto 1')")
+                      | Camara
+                      p(style='font-size:230%; color:white;') &#x2779
+                .g1
+                  h3 Emular prescencia
+                  fieldset.SignalField
+                    button#LED5.button(type='button', onclick='GetButton3()') Noche
+                    button#LED5.button(type='button', onclick='GetButton3()') Dia
+                .break
+        footer
+          p
+            | Copyright (c) 2015 Domotica seguridad & control
