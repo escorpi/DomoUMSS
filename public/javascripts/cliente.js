@@ -8,6 +8,43 @@ sock.on('humedad', function (data) {
 			var humedad2=data.h;
 			//console.log("ffff"+humedad2);
 		});
+///acciones para la simulacion de presencia
+sock.on('simu', function (data) {
+      var patio=document.getElementById('sPatio');
+      var cocina=document.getElementById('sCocina');
+      var sala=document.getElementById('sSala');
+      var dormitorio=document.getElementById('sDormitorio');
+      var lavado=document.getElementById('sLavado');
+      var tv=document.getElementById('sTv');
+      var radio=document.getElementById('sRadio');
+      var dtv=document.getElementById('sdTv');
+      var dradio=document.getElementById('sdRadio');
+      if(data.d=='activar'){
+        console.log("Simulacion de presencia encendida:"+data.d);
+        patio.textContent = 'Patio de 18:00 - 6:00';
+        cocina.textContent = 'Cocina de 18:00 - 20:00';
+        sala.textContent = 'Sala de 19:00 - 21:00';
+        dormitorio.textContent = 'Dormitorio de 20:00 - 23:00';
+        lavado.textContent = 'Lavado de 18:00 - 6:00';
+        tv.textContent = 'Television encendida de 18:00 - 6:00';
+        radio.textContent = 'Radio encendida de 18:00 - 22:00';
+        dtv.textContent = 'Television encendida de 12:00 - 14:00';
+        dradio.textContent = 'Radio encendida de 7:00 - 12:00, 14:00 - 18:00';
+      }
+      if(data.d=='reset'){
+        console.log("Simulacion de presencia apagada:"+data.d);
+        patio.textContent = '';
+        cocina.textContent = '';
+        sala.textContent = '';
+        dormitorio.textContent = '';
+        lavado.textContent = '';
+        tv.textContent = '';
+        radio.textContent = '';
+        dtv.textContent = '';
+        dradio.textContent = '';
+      }
+
+    });
 sock.on('toogles', function (data) {
       var swicth1='a'+data.t1;
       var swicth2='b'+data.t2;
@@ -20,7 +57,7 @@ sock.on('toogles', function (data) {
       iniciar(swicth4);
     });
 //comprobar  si esta online con el servidor.
-sock.on('disconnect', function () 
+sock.on('disconnect', function ()
    {
         console.log('desconectado!');
         alert("Se perdio conexion con el servidor");
@@ -41,7 +78,7 @@ sock.on('disconnect', function ()
   console.log("se inicializo firebase!!");
   var bdSensores= firebase.database().ref().child('sensores');
   var bdActuadores= firebase.database().ref().child('actuadores');
-  
+
 // recuperar datos
 bdSensores.on('value', function(snapshot){
    var s= snapshot.val();
@@ -135,7 +172,7 @@ function graficarT(datos){
     var baja=document.getElementById('baja');
     var normal=document.getElementById('normal');
     var alta=document.getElementById('alta');
-    var valor=datos; 
+    var valor=datos;
         if(valor>(maximo-1)) {
             alta.style.display='inline';
             baja.style.display='none';
@@ -177,7 +214,7 @@ function graficarH(datos){
     switch (name) {
   case "onoffswitch":
         if(doc)
-     	{   iosocket.emit('buttonval','a1'); 
+     	{   iosocket.emit('buttonval','a1');
         	 estado="encendido"; //alert("estado"+doc);
      	}else{
      	 	iosocket.emit('buttonval','a0');
@@ -187,7 +224,7 @@ function graficarH(datos){
     break;
   case "onoffswitch1":
         if(doc)
-     	{   iosocket.emit('buttonval','b1'); 
+     	{   iosocket.emit('buttonval','b1');
          	estado="encendido"; cambiar();//alert("estado"+doc);
      	}else{
      	 	iosocket.emit('buttonval','b0');
@@ -197,7 +234,7 @@ function graficarH(datos){
     break;
   case "onoffswitch2":
         if(doc)
-     	{   iosocket.emit('buttonval','c1'); 
+     	{   iosocket.emit('buttonval','c1');
          	estado="encendido"; //alert("estado"+doc);
      	}else{
      	 	iosocket.emit('buttonval','c0');
@@ -207,7 +244,7 @@ function graficarH(datos){
     break;
   case "onoffswitch3":
         if(doc)
-     	{   iosocket.emit('buttonval','d1'); 
+     	{   iosocket.emit('buttonval','d1');
          	estado="encendido"; alert("estado"+doc);
      	}else{
      	 	iosocket.emit('buttonval','d0');
@@ -217,7 +254,7 @@ function graficarH(datos){
     break;
   case "onoffswitch4":
   if(doc)
-     {   iosocket.emit('buttonval','e1'); 
+     {   iosocket.emit('buttonval','e1');
          estado="encendido"; alert("estado"+doc);
      }else{
      	 iosocket.emit('buttonval','e0');
@@ -227,7 +264,7 @@ function graficarH(datos){
   break;
   case "onoffswitch5":
         if(doc)
-     {   iosocket.emit('buttonval','f1'); 
+     {   iosocket.emit('buttonval','f1');
          estado="encendido"; //alert("estado"+doc);
      }else{
      	 iosocket.emit('buttonval','f0');
@@ -241,20 +278,20 @@ function graficarH(datos){
 
     }
     /////fin interuptotes\\\\\\\\\\\\\\\\\\\\\\\
-   
-//////nueva ventana 
-function abrir(ancho,alto,ruta,titulo) 
-{ 
-var miventana; 
-var posicion_x; 
-var posicion_y; 
-posicion_x=(screen.width/2)-(ancho/2); 
-posicion_y=(screen.height/2)-(alto/2); 
+
+//////nueva ventana
+function abrir(ancho,alto,ruta,titulo)
+{
+var miventana;
+var posicion_x;
+var posicion_y;
+posicion_x=(screen.width/2)-(ancho/2);
+posicion_y=(screen.height/2)-(alto/2);
 miventana=open("http://192.168.1.101:5000","miventana","width="+ancho+",height="+alto+",menubar=0,toolbar=0,directories=0,scrollbars=0,resizable=0,left="+posicion_x+",top="+posicion_y+"");
 }
 /////////////cambiar estados
  /*function cambiar(){
-        var dos=document.getElementById('onoffswitch'); 
+        var dos=document.getElementById('onoffswitch');
         if(estado=="encendido"){
           dos.prop("checked", true);//$("#chkStatus").prop("checked", true);
           console.log("entromamcambiar en si");
@@ -338,7 +375,7 @@ function onoff(name){//console.log("entro al metodo onoff");
       });
 //        console.log(" press off4");
     break;
-      
+
   default:
     alert.log("e494");
   }
@@ -408,8 +445,15 @@ function iniciar(name){// name--> sw 1/0
       $('#inset4').show();
       $('#neon4').hide(); //oculto mediante id
     break;
-      
+
   default:
     alert.log("e494");
   }
+}
+// funcion de simulacion envio de accion al servidor
+function activar(){
+  iosocket.emit('activar','activar');
+}
+function reset(){
+  iosocket.emit('activar','reset');
 }

@@ -48,14 +48,62 @@ function modificarDato(caso){
 }
 
 }
-
+// para la simulacion
+var alarma="reset";
+var intervalo;
+//var dia= new Date();
+function activado(socket){
+   verificar(socket);
+   intervalo= setInterval(function(){
+    verificar(socket);
+},6000);
+}
+function reset(socket){
+    clearInterval(intervalo);
+        modificarDato('a0');
+        modificarDato('d0');
+        socket.broadcast.emit('toogles',{t1:swicth1,t2:swicth2,t3:swicth3,t4:swicth4});
+        console.log("simulador apagado");
+}
+function verificar(socket) {
+  var dia= new Date();
+  var hora=dia.getHours();
+  var ahora={hora:dia.getHours(),
+              minuto:dia.getMinutes(),
+              segundo:''+dia.getSeconds()};
+  if(hora >=18 && hora <=15 ){
+      modificarDato('a1');
+      socket.broadcast.emit('toogles',{t1:swicth1,t2:swicth2,t3:swicth3,t4:swicth4});
+      console.log("entro al a1");//arreglar esto!!!!!!
+  }else {
+      console.log("no  entro");
+  }
+  if( ahora.hora<=20){
+      modificarDato('d1');
+      socket.broadcast.emit('toogles',{t1:swicth1,t2:swicth2,t3:swicth3,t4:swicth4});
+  }else {
+    console.log("no entro 2");
+  }
+  console.log('=======>'+ahora.hora+':'+ahora.minuto+':'+ahora.segundo);
+}
 /// socket IO
 socketio.sockets.on("connection",function(socket){
-  socket.broadcast.emit('toogles',{t1:swicth1,t2:swicth2,t3:swicth3,t4:swicth4}); 
+  socket.broadcast.emit('toogles',{t1:swicth1,t2:swicth2,t3:swicth3,t4:swicth4});
+  socket.broadcast.emit('simu', {d:alarma});
 
     socket.on("send",function(){
         console.log("dede cliente");
         socket.broadcast.emit('humedad', {h:sendData});
+    });
+    socket.on('activar', function(data) {
+        alarma=data;
+        if(alarma=='activar'){
+            activado(socket);
+        }else{
+            reset(socket);
+        }
+        //socket.broadcast.emit('toogles',{t1:swicth1,t2:swicth2,t3:swicth3,t4:swicth4});
+        socket.broadcast.emit('simu', {d:alarma});
     });
     //ver
 
@@ -65,14 +113,14 @@ socketio.sockets.on("connection",function(socket){
         console.log("BT enviando a serial--->"+bton1);
         serialPort.write(bton1);
         modificarDato(bton1);
-    //  ======  enviar a todos  BD ===\\\ 
-        socket.broadcast.emit('toogles',{t1:swicth1,t2:swicth2,t3:swicth3,t4:swicth4}); 
+    //  ======  enviar a todos  BD ===\\\
+        socket.broadcast.emit('toogles',{t1:swicth1,t2:swicth2,t3:swicth3,t4:swicth4});
     });
     socket.on('sliderval', function(data) {
         //serialPort.write('r'+data);
     });
 
-    
+
 });
 
 var routes = require('./routes/index');
@@ -151,11 +199,11 @@ function serialListener()
          stopBits: 1,
          flowControl: false
     });
- 
+
     serialPort.on("open", function () {
       console.log('open serial communication');
             // Listens to incoming data
-       //var sendData;     
+       //var sendData;
         serialPort.on('data', function(data) {
              receivedData += data.toString();
              //console.log('datos recividos de serialport'+receivedData);
@@ -178,8 +226,8 @@ function serialListener()
        sendData=sendData*1.000;
        socketio.emit('temperatureUpdate',date,sendData );
        console.log("a la pagina:-->"+sendData);
-      });  
-    });  
+      });
+    });
 }
 serialListener();
 /*/ //fin de serial

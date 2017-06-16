@@ -24,7 +24,7 @@ block content
             li.tab
               a(href='#resume')
                 i.icon-file-text
-                span  Monitoreo
+                span  Resumen
             li.tab
               a(href='#portfolio')
                 i.icon-heart
@@ -50,7 +50,7 @@ block content
                   .main-links.sidebar
                     ul
                       li
-                        a(href='#resume') Monitoreo
+                        a(href='#resume') Ver Resumen
                       li
                         a(href='#portfolio') Estadisticas
                       li
@@ -101,9 +101,9 @@ block content
                         span#valor(style='position: absolute;')
                         .break
                         h7
-                          | Humedad 
+                          | Humedad
                         progress#barraH(value='0', max='100' style='display: none;')
-                        i.flaticon-humedad
+                        i#humedad.flaticon-humedad
                         span#valorH(style='position: absolute;')
                     li
                       h5
@@ -116,10 +116,10 @@ block content
                           fieldset.StatusField
                             legend.FieldLabelText Estado
                             p
-                              | Alarma Gas: 
+                              | Alarma Gas:
                               span.switches ...
                             p
-                              | LLuvia: 
+                              | LLuvia:
                               span.switches ...
                 .g1
                   .sidebar
@@ -133,7 +133,7 @@ block content
                           #btnHolder
                             label.switch
                               #neon1.neon(style='display: none;', onclick="onoff('on1')", name='on1')
-                               h8 on 
+                               h8 on
                               #inset1.inset(style='display: block;', onclick="onoff('off1')", name='off1')
                                h8 off
                               span.skrif Luces Sala
@@ -141,9 +141,9 @@ block content
                                h8 on
                               #inset2.inset(style='display: block;', onclick="onoff('off2')", name='off2')
                                h8 off
-                              span.skrif Luces Patio 
+                              span.skrif Luces Patio
                               #neon3.neon(style='display: none;', onclick="onoff('on3')", name='on3')
-                               h8 on 
+                               h8 on
                               #inset3.inset(style='display: block;', onclick="onoff('off3')", name='off3')
                                h8 off
                               span.skrif Luces cocina
@@ -151,7 +151,7 @@ block content
                                h8 on
                               #inset4.inset(style='display: block;', onclick="onoff('off4')", name='off4')
                                h8 off
-                              span.skrif Luces pasillo 
+                              span.skrif Luces pasillo
                               .onoffswitch
                                   #on3.o(style='display: none;', onclick="onoff('on3')", name='on')
                                     i.flaticon-on
@@ -166,14 +166,14 @@ block content
                                     i.flaticon-off
                               span.skrif Led rojo
                             label.switch
-                              .onoffswitch                               
+                              .onoffswitch
             #portfolio
               section.clearfix
-                
+
                   #chart(style='width:100%; height:400px;')
                   script.
                     // Creo un WebSocket. ¡Poned la IP de vuestra Raspberry Pi!
-                    var socket=io.connect('http://192.168.1.111:4000');
+                    var socket=io.connect('http://192.168.1.101:4000');
                     // Creo un nuevo objeto 'Chart'
                     var chart;
                     chart = new Highcharts.Chart({
@@ -232,11 +232,23 @@ block content
                       | Camara
                       p(style='font-size:230%; color:white;') &#x2779
                 .g1
-                  h3 Emular prescencia
+                  h3 Disimular prescencia
                   fieldset.SignalField
-                    button#LED5.button(type='button', onclick='GetButton3()') Noche
-                    button#LED5.button(type='button', onclick='GetButton3()') Dia
+                    button#noche.button(type='button', onclick='activar()') Activar
+                    button#reset.button(type='button', onclick='reset()') Desactivar
+                  fieldset.SignalField
+                    p Noche - Luces encendidas:
+                    p#sPatio
+                    p#sCocina
+                    p#sSala
+                    p#sDormitorio
+                    p#sLavado
+                    p#sTv
+                    p#sRadio
+                    p Dia:
+                    p#sdTv
+                    p#sdRadio
                 .break
         footer
           p
-            | Copyright (c) 2016 Domotica seguridad & control
+            | Copyright (c) 2015 Domotica seguridad & control
