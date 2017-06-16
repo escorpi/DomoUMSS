@@ -71,7 +71,7 @@ function verificar(socket) {
   var ahora={hora:dia.getHours(),
               minuto:dia.getMinutes(),
               segundo:''+dia.getSeconds()};
-  if(hora >=18 && hora <=15 ){
+  if(hora >=18 || hora <=6 ){
       modificarDato('a1');
       socket.broadcast.emit('toogles',{t1:swicth1,t2:swicth2,t3:swicth3,t4:swicth4});
       console.log("entro al a1");//arreglar esto!!!!!!
