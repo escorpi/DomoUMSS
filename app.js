@@ -77,7 +77,7 @@ function verificar(socket) {
       modificarDato('a1');
       serialPort.write('a1');
       socket.broadcast.emit('toogles',{t1:swicth1,t2:swicth2,t3:swicth3,t4:swicth4});
-      console.log("entro al a1");//arreglar esto!!!!!!
+      console.log("entro al de dia");//arreglar esto!!!!!!
   }else {
       console.log("no  entro");
   }
