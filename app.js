@@ -61,7 +61,9 @@ function activado(socket){
 function reset(socket){
     clearInterval(intervalo);
         modificarDato('a0');
+        serialPort.write('a0');
         modificarDato('d0');
+        serialPort.write('d0');
         socket.broadcast.emit('toogles',{t1:swicth1,t2:swicth2,t3:swicth3,t4:swicth4});
         console.log("simulador apagado");
 }
@@ -73,6 +75,7 @@ function verificar(socket) {
               segundo:''+dia.getSeconds()};
   if(hora >=18 || hora <=6 ){
       modificarDato('a1');
+      serialPort.write('a1');
       socket.broadcast.emit('toogles',{t1:swicth1,t2:swicth2,t3:swicth3,t4:swicth4});
       console.log("entro al a1");//arreglar esto!!!!!!
   }else {
@@ -80,6 +83,7 @@ function verificar(socket) {
   }
   if( ahora.hora<=20){
       modificarDato('d1');
+      serialPort.write('d1');
       socket.broadcast.emit('toogles',{t1:swicth1,t2:swicth2,t3:swicth3,t4:swicth4});
   }else {
     console.log("no entro 2");
