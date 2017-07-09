@@ -96,7 +96,7 @@ socketio.sockets.on("connection",function(socket){
   socket.broadcast.emit('simu', {d:alarma});
 
     socket.on("send",function(){
-        console.log("dede cliente");
+        console.log("<---- desde el cliente");
         socket.broadcast.emit('humedad', {h:sendData});
     });
     socket.on('activar', function(data) {
