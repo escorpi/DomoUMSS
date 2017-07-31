@@ -157,9 +157,9 @@ block content
 
                   #chart(style='width:100%; height:400px;')
                   script.
-                    // Creo un WebSocket. ¡Poned la IP de vuestra Raspberry Pi!
+                    // Creo un WebSocket.
                     var socket=io.connect('http://192.168.1.111:4000');
-                    // Creo un nuevo objeto 'Chart'
+                    // Creo un nuevo objeto 'Chart' para mostrar grafica del la temperatura
                     var chart;
                     chart = new Highcharts.Chart({
                     chart: {

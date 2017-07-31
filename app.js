@@ -8,9 +8,6 @@ var socketio = require('socket.io').listen(4000);
 var SerialPort = require("serialport").SerialPort;
 //var firebase = require("firebase");
 
-///serial
-//var serialPort;
-//var portName = 'COM41'; //change this to your Arduino port
 var sendData = "55";
 //=== almacenamiento de datos ====\\\\\\\
 var swicth1=0;
@@ -94,10 +91,10 @@ function verificar(socket) {
 socketio.sockets.on("connection",function(socket){
   socket.broadcast.emit('toogles',{t1:swicth1,t2:swicth2,t3:swicth3,t4:swicth4});
   socket.broadcast.emit('simu', {d:alarma});
-
+    //llega datos desde el cliente, y enviamos el valor de temperatura
     socket.on("send",function(){
         console.log("<---- desde el cliente");
-        socket.broadcast.emit('humedad', {h:sendData});
+        socket.broadcast.emit('temperatura', {t:sendData});
     });
     socket.on('activar', function(data) {
         alarma=data;
@@ -111,10 +108,10 @@ socketio.sockets.on("connection",function(socket){
     });
     //ver
 
-    //ok
+    //ok  llega los interrumtores desde el cliente.
     socket.on('buttonval', function(data) {
-        bton1=data;//data + 'E'
-        console.log("BT enviando a serial--->"+bton1);
+        bton1=data;
+        console.log("accion - enviando a serial--->"+bton1);
         serialPort.write(bton1);
         modificarDato(bton1);
     //  ======  enviar a todos  BD ===\\\
@@ -224,7 +221,7 @@ function serialListener()
              sendDataG=sg;
            receivedData = '';
          }
-         // send the incoming data to browser with websockets.
+         // envio de datos recogidos.
          var date = new Date().getTime();
        socketio.emit('sensor',{st:sendData,sh:sendDataH,sg:sendDataG} );
        sendData=sendData*1.000;
