@@ -1,5 +1,5 @@
 # Servidor Node.js para el Sistema de Control Domótico de Vivienda Unifamiliar
-![DomoUMSS](https://lh3.googleusercontent.com/mxxJk3Qf3-4P34ZU6AwpcUZ3ySBhKTMmfleEGuw_nALfMk7H5NHBv-kWQy29Dyths8r50VfjaRjlvAEk9VurhLte30NoZh3k2BjRWU88g8Dx34NxWZYi2bGVLFd4CmTX-F59TxlW53XykfLdWkAXPWsz8EKPO_4WiV_MAAqx5q4mafIS0W0iKbyKDc7N00WUMuzcDiQ_3lkwbACGNHHsJfcBzjofSZXMM3BKNcXOX1HiTmrUEDHBfP6a-2Ieb7Kk6pOEsMnjvwYeSYwm1xr2Zl4aeAvsfV-vuh_Chh5cwNh8MoxZsAdfDFd-O-OIGpioWAA_9p2BkJPF50mmkYVpVb0DinjkY18b5Mvd_FNxy5vIYk5S4r4huyDQQD0S32l-cTaNQ8TRI1wUL4mmU8F4gQtClBfVtc5nGNfAiOTSnIBcCsSZ-oc22LHXhy03A0SVfWOt-sisYIvRfhboH5cmiZOAYFuyhIXieewfGnNrLYINJZWKG2FnH6TPbSk4fMDzx2-scVoAAOwfDzosgM8016-hGl337KVRNhYo3UWeBybhgnAzgPzdO9NY5Mqu15z1NVW_jd-6200wHt2ypWV69igEFLANd3iVIVbLhbPsEo_dzeVlX322Zh0q=w393-h556-no)
+![DomoUMSS](https://photos.app.goo.gl/QYUXrGC8s284H7468)
 ## Estructura del Sistema
 Tiene la parte del hardware, compuesto de sensores/actuadores y la placa controladora. La informacion recogida sera enviada al servidor por comunicacion serial.  
 El servidor  es una raspberry pi 2 con el SO rasbyan, el cual esta instalado node y sus dependencias, tanto el mudulo para comunicacion serial ***serialport*** y para el tiempo real ***socket.io***.  
